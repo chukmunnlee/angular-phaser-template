@@ -3,8 +3,16 @@ import { Scene, GameObjects } from 'phaser'
 import {SceneGrid} from "../utils/scene-utils";
 
 import {
-  SCENE_LOADER, SCENE_START,
-  IMAGE_GAME_TITLE, IMAGE_GAME_OVER, IMAGE_BUTTON_2, IMAGE_TOGGLE_1, SCENE_END
+  SCENE_LOADER,
+  SCENE_START,
+  IMAGE_GAME_TITLE,
+  IMAGE_GAME_OVER,
+  IMAGE_BUTTON_2,
+  IMAGE_TOGGLE_1,
+  SCENE_END,
+  IMAGE_MUSIC_ON,
+  IMAGE_MUSIC_OFF,
+  IMAGE_SFX_ON, IMAGE_SFX_OFF
 } from "../constants";
 
 export class LoaderScene extends Scene {
@@ -35,14 +43,19 @@ export class LoaderScene extends Scene {
     this.load.image(IMAGE_GAME_OVER, 'assets/images/game_over.png')
     this.load.image(IMAGE_BUTTON_2, 'assets/ui/buttons/2/2.png')
     this.load.image(IMAGE_TOGGLE_1, 'assets/ui/toggles/1.png')
+    this.load.image(IMAGE_MUSIC_ON, 'assets/ui/icons/music_on.png')
+    this.load.image(IMAGE_MUSIC_OFF, 'assets/ui/icons/music_off.png')
+    this.load.image(IMAGE_SFX_ON, 'assets/ui/icons/sfx_on.png')
+    this.load.image(IMAGE_SFX_OFF, 'assets/ui/icons/sfx_off.png')
   }
 
   loadProgress(progress) {
     const prog = Math.floor(progress * 100)
     this.progressText.setText(`Progress: ${prog}%`)
-    if (prog >= 1) {
-      this.scene.start(SCENE_START)
-    }
+    if (prog >= 1)
+      this.time.delayedCall(1000,
+        (() => this.scene.start(SCENE_START)).bind(this)
+      )
   }
 
 }

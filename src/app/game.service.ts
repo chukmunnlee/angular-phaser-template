@@ -10,6 +10,7 @@ export class GameService {
 
   created = false
   game: Game
+  debug = false
 
   constructor() { }
 
@@ -17,6 +18,7 @@ export class GameService {
     if (this.created)
       return
 
+    this.debug = debug
     this.created = true
     this.game = new Game({
       width: 800, height: 800,

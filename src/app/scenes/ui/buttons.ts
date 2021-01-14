@@ -22,8 +22,6 @@ export class Button<T> extends GameObjects.Container {
 
     const scene = config.scene
 
-    scene.add.text(0, 0, 'abc', )
-
     const text = scene.add.text(0, 0, config.text, {
       color: '#ffffff',
       fontSize: config.fontSize,
@@ -48,17 +46,66 @@ export class Button<T> extends GameObjects.Container {
   }
 }
 
-export interface ToggleButtonConfig<T> {
+export interface ToggleButtonConfig {
   scene: Scene,
   initialState?: boolean
   onIconResource: string
   offIconResource: string
   resource: string,
 }
-export class ToggleButton<T> extends Container {
-  event = new Subject<T>()
-  constructor(private config: ToggleButtonConfig<T>) {
-    super(config.scene);
+export class ToggleButton extends Container {
+
+  event = new Subject<boolean>()
+  get toggleState() {
+    return this._toggleState
+  }
+  set toggleState(v: boolean) {
+    this._toggleState = v
+    this.updateIcon()
   }
 
+  private _toggleState  = this.config.initialState
+  private offImage: GameObjects.Image
+  private onImage: GameObjects.Image
+
+  constructor(private config: ToggleButtonConfig) {
+    super(config.scene);
+
+    const scene = config.scene
+    const background = scene.add.image(0, 0, config.resource)
+    this.setSize(background.displayWidth, background.displayHeight)
+    this.add(background)
+
+    const cx = Math.floor(background.displayWidth / 2)
+    const cy = Math.floor(background.displayHeight / 2)
+    background.setPosition(cx, cy)
+
+    this.onImage = scene.add.image(cx, cy, config.onIconResource)
+    scaleObjectWidth(this.onImage, background.displayWidth, .6)
+    this.add(this.onImage)
+    this.offImage = scene.add.image(cx, cy, config.offIconResource)
+    scaleObjectWidth(this.offImage, background.displayWidth, .6)
+    this.add(this.offImage)
+
+    this.toggleState = config.initialState || true
+
+    scene.add.existing(this)
+
+    background.setInteractive()
+    background.on('pointerdown', this.buttonPressed.bind(this))
+  }
+
+  private buttonPressed() {
+    this.toggleButton()
+    this.event.next(this._toggleState)
+  }
+
+  private updateIcon() {
+    this.offImage.alpha = this.toggleState? 0: 1
+    this.onImage.alpha = this.toggleState? 1: 0
+  }
+  toggleButton() {
+    this.toggleState = !this.toggleState
+    this.updateIcon()
+  }
 }

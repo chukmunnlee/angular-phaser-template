@@ -11,7 +11,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   constructor(private gameSvc: GameService) { }
 
   ngOnInit(): void {
-    this.gameSvc.createGame(true)
+    this.gameSvc.createGame(false)
   }
 
   ngOnDestroy() {

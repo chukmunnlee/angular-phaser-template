@@ -3,19 +3,14 @@ import { Scene, GameObjects } from 'phaser'
 import {SceneGrid} from "../utils/scene-utils";
 
 import {
-  SCENE_LOADER,
-  SCENE_START,
-  IMAGE_GAME_TITLE,
-  IMAGE_GAME_OVER,
-  IMAGE_BUTTON_2,
-  IMAGE_TOGGLE_1,
-  SCENE_END,
-  IMAGE_MUSIC_ON,
-  IMAGE_MUSIC_OFF,
+  SCENE_LOADER, SCENE_START,
+  IMAGE_GAME_TITLE, IMAGE_GAME_OVER,
+  IMAGE_BUTTON_2, IMAGE_TOGGLE_1,
+  IMAGE_MUSIC_ON, IMAGE_MUSIC_OFF,
   IMAGE_SFX_ON, IMAGE_SFX_OFF
 } from "../constants";
 
-export class LoaderScene extends Scene {
+export class PreloaderScene extends Scene {
 
   progressText: GameObjects.Text
 

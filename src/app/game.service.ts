@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Game} from "phaser";
-import {LoaderScene} from "./scenes/loader.scene";
+import {PreloaderScene} from "./scenes/preloader.scene";
 import {StartScene} from "./scenes/start.scene";
 import {PlayScene} from "./scenes/play.scene";
 import {EndScene} from "./scenes/end.scene";
@@ -28,7 +28,7 @@ export class GameService {
         default: 'arcade',
         arcade: { debug }
       },
-      scene: [ LoaderScene, StartScene, PlayScene, EndScene ]
+      scene: [ PreloaderScene, StartScene, PlayScene, EndScene ]
     })
   }
 
